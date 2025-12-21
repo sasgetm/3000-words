@@ -44,7 +44,7 @@ function App() {
 			</header> */}
 			<div className="container">
 				<div className="cards-container">
-					{ cards.map((card, i) => (
+					{ [...cards].reverse().map((card) => (
 						<Card
 							key={card._id}
 							card={card}
