@@ -168,6 +168,37 @@
 	background: var(--bg-gray);
 }
 
+.menu__item_hidden {}
+.menu__item-hidden-icon {}
+.hidden-words {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	visibility: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--bg-dark);
+	z-index: -1;
+}
+.hidden-words_open {
+	opacity: 1;
+	visibility: visible;
+	z-index: 1;
+}
+.hidden-words__list {
+	max-height: 100%;
+	overflow: auto;
+}
+.hidden-words__item {
+	display: flex;
+	gap: 16px;
+}
+.hidden-words__word {}
+.hidden-words__word_en {}
+.hidden-words__word_ru {}
+.hidden-words__restore {}
+
 
 .card {
 	background: var(--bg-gray);
@@ -225,7 +256,7 @@
 	left: 24px;
 	width: 48px;
 	height: 48px;
-	z-index: 1;
+	/* z-index: 1; */
 	display: flex;
 	align-items: center;
 	justify-content: center;

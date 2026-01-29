@@ -11,6 +11,7 @@ function App() {
 	const [allCards] = useState(cardsArr);
 	const [cardsOrder, setCardsOrder] = useState([]);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isHiddenWordsOpen, setIsHiddenWordsOpen] = useState(false);
 	const [activeCategory, setActiveCategory] = useState(2);
 	const [cardSide, setCardSide] = useState('a');
 
@@ -67,7 +68,8 @@ function App() {
 	}, [cardsOrder, allCards, hiddenWords]);
 
 	function handleMenu() {
-		setIsMenuOpen(prev => prev === true ? false : true);
+		setIsHiddenWordsOpen(false);
+		setIsMenuOpen(prev => !prev);
 	}
 
 	function handleCategory(cat) {
@@ -88,6 +90,9 @@ function App() {
 		setCardsOrder(prev => prev.filter(id => id !== cardId));
 	}
 	
+	function handleRestoreWord(cardId) {
+		setHiddenWords(prev => prev.filter(id => id !== cardId));
+	}
 
 	return (
 		<div className="page">
@@ -128,6 +133,50 @@ function App() {
 							/* <li className={`menu__item ${isHundredActive(hundred._id) ? 'active' : ''}`} onClick={handleCategory(hundred._id)}>{hundred._id}</li> */
 							<li className="menu__item" onClick={() => handleCategory(hundred._id)}>{hundred._id}</li>
 						))}
+
+						<li
+							className="menu__item menu__item_hidden"
+							onClick={() => {
+								setIsMenuOpen(false);
+								setIsHiddenWordsOpen(true);
+							}}
+						>
+							<svg className="menu__item-hidden-icon" width="21" height="30" viewBox="0 0 21 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M1.5 3.5L2.5 28.5H18.5L19.5 3.5H1.5Z" stroke="#fff" strokeWidth="3" strokeLinejoin="round"/>
+								<path d="M7.5 8L8 24" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+								<path d="M13.499 8L13 24" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+								<path d="M8.5 1.5L12.5 1.5" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+								<path d="M12.5 1.5V3.5" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+								<path d="M8.5 1.5V3.5" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+							</svg>
+						</li>
+
+					</ul>
+				</div>
+
+				<div className={`hidden-words ${isHiddenWordsOpen ? 'hidden-words_open' : ''}`}>
+					<ul className="hidden-words__list">
+						{hiddenWords.map(id => {
+							const card = allCards.find(c => c._id === id);
+							if (!card) return null;
+
+							return (
+								<li key={id} className="hidden-words__item">
+									<span className="hidden-words__word hidden-words__word_en">
+										{card.b.word}
+									</span>
+									<span className="hidden-words__word hidden-words__word_ru">
+										{card.a.word}
+									</span>
+									<button
+										className="hidden-words__restore button-48"
+										onClick={() => handleRestoreWord(id)}
+									>
+										Вернуть
+									</button>
+								</li>
+							);
+						})}
 					</ul>
 				</div>
 
