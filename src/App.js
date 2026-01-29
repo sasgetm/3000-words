@@ -30,17 +30,32 @@ function App() {
 
 	function handleCardsNav(operation) {
 		setCardsOrder(prev => {
-			if (prev.length === 0) return prev;
+			// оставляем только нескрытые карточки
+			const visibleOrder = prev.filter(id => !hiddenWords.includes(id));
+			if (visibleOrder.length <= 1) return prev;
+
+			let newVisibleOrder = [];
 
 			if (operation === 'next') {
-				return [prev[prev.length - 1], ...prev.slice(0, -1)];
+				newVisibleOrder = [
+					visibleOrder[visibleOrder.length - 1],
+					...visibleOrder.slice(0, -1),
+				];
 			}
 
 			if (operation === 'prev') {
-				return [...prev.slice(1), prev[0]];
+				newVisibleOrder = [
+					...visibleOrder.slice(1),
+					visibleOrder[0],
+				];
 			}
 
-			return prev;
+			// возвращаем скрытые карточки на свои места в общем порядке
+			const result = prev.map(id =>
+				hiddenWords.includes(id) ? id : newVisibleOrder.shift()
+			);
+
+			return result;
 		});
 	}
 
