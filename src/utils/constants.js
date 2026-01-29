@@ -184,6 +184,21 @@ export const cardsArr = [
   { _id: 183, a: { word: 'move' }, b: { word: 'двигаться' } },
 ];
 
+export const cardsHundreds = [
+  {
+    _id: 1,
+    items: Array.from({ length: 83 }, (_, i) => i + 1),
+  },
+  {
+    _id: 2,
+    items: Array.from({ length: 100 }, (_, i) => i + 84),
+  },
+  {
+    _id: 3,
+    items: Array.from({ length: 100 }, (_, i) => i + 184),
+  }
+];
+
 // export const token = '4d2fc48f-d0c7-4bea-a8e0-385b9ccc8f15';
 // export const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-75';
 
