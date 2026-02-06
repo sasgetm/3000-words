@@ -170,34 +170,70 @@
 
 .menu__item_hidden {}
 .menu__item-hidden-icon {}
-.hidden-words {
+
+.ago-button {
 	position: absolute;
-	inset: 0;
-	opacity: 0;
-	visibility: none;
-	display: flex;
+	left: 32px;
+	top: 32px;
+	color: var(--text-white);
+	text-decoration: none;
+	font-size: 32px;
+}
+/* .hidden-words { */
+	/* position: absolute; */
+	/* inset: 0; */
+	/* opacity: 0; */
+	/* visibility: none; */
+	/* display: flex;
 	justify-content: center;
 	align-items: center;
 	background: var(--bg-dark);
-	z-index: -1;
-}
-.hidden-words_open {
+	z-index: -1; */
+/* } */
+/* .hidden-words_open {
 	opacity: 1;
 	visibility: visible;
 	z-index: 1;
-}
+} */
 .hidden-words__list {
 	max-height: 100%;
+	width: 800px;
+	max-width: calc(100% - 64px);
 	overflow: auto;
+	padding: 200px 50px;
+	margin: 0;
 }
+.hidden-words__list::-webkit-scrollbar {
+  width: 0; /* Ширина всего элемента навигации */
+}
+
+.hidden-words__list::-webkit-scrollbar-track {
+  background: var(--bg-gray); /* Цвет дорожки */
+}
+
+.hidden-words__list::-webkit-scrollbar-thumb {
+  background-color: var(--btn); /* Цвет бегунка */
+  border-radius: 20px; /* Округление бегунка */
+  /* border: 3px solid #050c26; Оформление границ бегунка */
+}
+.hidden-words__list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--btn-hover); /* Цвет бегунка */
+}
+
 .hidden-words__item {
-	display: flex;
+	display: grid;
+	grid-template-columns: 2fr 3fr 1fr;
 	gap: 16px;
+	align-items: center;
 }
-.hidden-words__word {}
+.hidden-words__word {
+	font-size: 24px;
+}
 .hidden-words__word_en {}
 .hidden-words__word_ru {}
-.hidden-words__restore {}
+.hidden-words__restore {
+	justify-self: center;
+}
 
 
 .card {

@@ -56,7 +56,7 @@ export const cardsArr = [
   { _id: 55, a: { word: 'also' }, b: { word: 'также' } },
   { _id: 56, a: { word: 'into' }, b: { word: 'внутрь' } },
   { _id: 57, a: { word: 'only' }, b: { word: 'только' } },
-  { _id: 58, a: { word: 'look' }, b: { word: 'смотреть' } },
+  { _id: 58, a: { word: 'look' }, b: { word: 'смотреть / выглядеть' } },
   { _id: 59, a: { word: 'want' }, b: { word: 'хотеть' } },
   { _id: 60, a: { word: 'give' }, b: { word: 'давать' } },
   { _id: 61, a: { word: 'first' }, b: { word: 'первый' } },
