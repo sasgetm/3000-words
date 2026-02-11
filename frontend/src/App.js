@@ -11,6 +11,9 @@ import './styles/normalize.css';
 import './App.css';
 import { cardsArr, cardsHundreds } from './utils/constants.js';
 
+
+import { fetchTest } from './api/testApi';
+
 function App() {
 
 	const navigate = useNavigate();
@@ -20,6 +23,13 @@ function App() {
 	const [cardsOrder, setCardsOrder] = useState([]);
 	const [activeCategory, setActiveCategory] = useState(2);
 	const [cardSide, setCardSide] = useState('a');
+
+	const [data, setData] = useState(null);
+
+	useEffect(() => {
+		fetchTest().then(setData).catch(console.error);
+	}, []);
+
 
 	// const [hiddenWords, setHiddenWords] = useState(() => {
 	// 	const stored = localStorage.getItem('hiddenWords');
@@ -122,6 +132,13 @@ function App() {
 				</a>
 			</header> */}
 			<div className="container">
+
+
+    <div>
+      <h1>api test</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div> 
+
 				<Routes>
 					<Route
 						path="/"

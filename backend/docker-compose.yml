@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: ./docker/php
+    container_name: backend_app
+    volumes:
+      - ./laravel:/var/www
+    working_dir: /var/www
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: backend_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./laravel:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: backend_db
+    environment:
+      MYSQL_DATABASE: words
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: laravel
+      PMA_PASSWORD: secret
+    depends_on:
+      - db
+
+volumes:
+  db_data:
