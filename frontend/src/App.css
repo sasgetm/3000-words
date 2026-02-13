@@ -145,8 +145,8 @@
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
 	align-items: center;
 	gap: 20px;
 }
@@ -283,6 +283,9 @@
 }
 .card__word {
 	font-size: 32px;
+	text-align: center;
+	max-width: 95%;
+	word-wrap: break-word;
 }
 
 

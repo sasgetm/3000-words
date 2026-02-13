@@ -1,6 +1,5 @@
 
 import { useState } from 'react';
-import { cardsHundreds } from '../utils/constants';
 import Card from './../components/Card';
 
 function CardsPage({
@@ -11,12 +10,11 @@ function CardsPage({
 	onNav,
 	onOpenHidden,
 	onCategory,
+	categories,
 }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	// const [isHiddenWordsOpen, setIsHiddenWordsOpen] = useState(false);
 
 	function handleMenu() {
-		// setIsHiddenWordsOpen(false);
 		setIsMenuOpen(prev => !prev);
 	}
 
@@ -41,7 +39,7 @@ function CardsPage({
 			<div className={`menu ${isMenuOpen ? 'menu_open' : ''}`}>
 			{/* <div className="menu"> */}
 				<ul className="menu__list">
-					{cardsHundreds.map(hundred => (
+					{/* {cardsHundreds.map(hundred => (
 						<li
 							key={hundred._id}
 							className="menu__item"
@@ -51,7 +49,21 @@ function CardsPage({
 							}}
 						>
 							{hundred._id}
-						</li>
+						</li> */}
+					{categories.map(parent => (
+						parent.children?.map(child => (
+							<li
+								key={child.id}
+								className="menu__item"
+								onClick={() => {
+									onCategory(child.id);
+									setIsMenuOpen(false);
+								}}
+							>
+								{/* {parent.name} → {child.name} */}
+								{child.name}
+							</li>
+						))
 					))}
 
 					<li
@@ -73,10 +85,10 @@ function CardsPage({
 			<div className="cards-container">
 				{[...cards].reverse().map(card => (
 					<Card
-						key={card._id}
+						key={card.id}
 						card={card}
 						side={cardSide}
-						onHide={onHide}
+						onHide={() => onHide(card.id)}
 					/>
 				))}
 			</div>

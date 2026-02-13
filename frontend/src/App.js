@@ -4,31 +4,36 @@ import CardsPage from './pages/CardsPage';
 import HiddenWordsPage from './pages/HiddenWordsPage';
 
 // import logo from './logo.svg';
-// import { useContext } from 'react';
-// import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import './styles/normalize.css';
 import './App.css';
-import { cardsArr, cardsHundreds } from './utils/constants.js';
+// import { cardsArr } from './utils/constants.js';
 
-
-import { fetchTest } from './api/testApi';
+import { fetchCategories } from './api/categoriesApi';
+import { fetchWordsByCategory } from './api/wordsApi';
 
 function App() {
-
 	const navigate = useNavigate();
-
-
-	const [allCards] = useState(cardsArr);
-	const [cardsOrder, setCardsOrder] = useState([]);
+	const [cards, setCards] = useState([]);
 	const [activeCategory, setActiveCategory] = useState(2);
 	const [cardSide, setCardSide] = useState('a');
-
-	const [data, setData] = useState(null);
+	const [categories, setCategories] = useState([]);
 
 	useEffect(() => {
-		fetchTest().then(setData).catch(console.error);
+		fetchCategories()
+			.then(data => setCategories(data))
+			.catch(console.error);
 	}, []);
+
+	useEffect(() => {
+		if (!activeCategory) return;
+
+		fetchWordsByCategory(activeCategory)
+			.then(data => setCards(data))
+			.catch(console.error);
+	}, [activeCategory]);
+
+
 
 
 	// const [hiddenWords, setHiddenWords] = useState(() => {
@@ -40,52 +45,37 @@ function App() {
 		return JSON.parse(localStorage.getItem('hiddenWords')) || [];
 	});
 
-	useEffect(() => {
-		const ids = cardsHundreds.find(h => h._id === activeCategory)?.items || [];
-		setCardsOrder(ids);
-	}, [activeCategory]);
+	// useEffect(() => {
+	// 	const ids = categories.find(h => h._id === activeCategory)?.items || [];
+	// 	setCardsOrder(ids);
+	// }, [activeCategory]);
 
 	useEffect(() => {
 		localStorage.setItem('hiddenWords', JSON.stringify(hiddenWords));
 	}, [hiddenWords]);
 
 	function handleCardsNav(operation) {
-		setCardsOrder(prev => {
-			// оставляем только нескрытые карточки
-			const visibleOrder = prev.filter(id => !hiddenWords.includes(id));
-			if (visibleOrder.length <= 1) return prev;
 
-			let newVisibleOrder = [];
+		setCards(prev => {
+			if (prev.length <= 1) return prev;
 
 			if (operation === 'next') {
-				newVisibleOrder = [
-					visibleOrder[visibleOrder.length - 1],
-					...visibleOrder.slice(0, -1),
-				];
+				return [...prev.slice(1), prev[0]];
 			}
 
 			if (operation === 'prev') {
-				newVisibleOrder = [
-					...visibleOrder.slice(1),
-					visibleOrder[0],
-				];
+				return [prev[prev.length - 1], ...prev.slice(0, -1)];
 			}
 
 			// возвращаем скрытые карточки на свои места в общем порядке
-			const result = prev.map(id =>
-				hiddenWords.includes(id) ? id : newVisibleOrder.shift()
-			);
+			// const result = prev.map(id =>
+			// 	hiddenWords.includes(id) ? id : newVisibleOrder.shift()
+			// );
 
-			return result;
+			return prev;
 		});
 	}
 
-	const cards = useMemo(() => {
-		return cardsOrder
-			.filter(id => !hiddenWords.includes(id))
-			.map(id => allCards.find(card => card._id === id))
-			.filter(Boolean);
-	}, [cardsOrder, allCards, hiddenWords]);
 
 	function handleCategory(cat) {
 		setActiveCategory(cat);
@@ -102,12 +92,8 @@ function App() {
 			return [...prev, cardId];
 		});
 
-		setCardsOrder(prev => prev.filter(id => id !== cardId));
+		setCards(prev => prev.filter(card => card.id !== cardId));
 	}
-	
-	// function handleRestoreWord(cardId) {
-	// 	setHiddenWords(prev => prev.filter(id => id !== cardId));
-	// }
 	
 	const handleRestoreWord = (id) => {
 		setHiddenWords(prev =>
@@ -133,12 +119,6 @@ function App() {
 			</header> */}
 			<div className="container">
 
-
-    <div>
-      <h1>api test</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div> 
-
 				<Routes>
 					<Route
 						path="/"
@@ -151,6 +131,7 @@ function App() {
 								onNav={handleCardsNav}
 								onCategory={handleCategory}
 								onOpenHidden={() => navigate('/hidden')}
+								categories={categories}
 							/>
 						}
 					/>
@@ -160,7 +141,8 @@ function App() {
 						element={
 							<HiddenWordsPage
 								hiddenWords={hiddenWords}
-								allCards={allCards}
+								// allCards={allCards}
+								allCards={cards}
 								onRestore={handleRestoreWord}
 							/>
 						}
