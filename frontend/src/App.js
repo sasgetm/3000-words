@@ -14,10 +14,22 @@ import { fetchWordsByCategory } from './api/wordsApi';
 
 function App() {
 	const navigate = useNavigate();
-	const [cards, setCards] = useState([]);
+	const [words, setWords] = useState([]);
 	const [activeCategory, setActiveCategory] = useState(2);
 	const [cardSide, setCardSide] = useState('a');
 	const [categories, setCategories] = useState([]);
+
+
+	// const [hiddenWords, setHiddenWords] = useState(() => {
+	// 	const stored = localStorage.getItem('hiddenWords');
+	// 	return stored ? JSON.parse(stored) : [];
+	// });
+
+	const [hiddenWords, setHiddenWords] = useState(() => {
+		return JSON.parse(localStorage.getItem('hiddenWords')) || [];
+	});
+	const [order, setOrder] = useState([]);
+	// const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
 		fetchCategories()
@@ -29,21 +41,14 @@ function App() {
 		if (!activeCategory) return;
 
 		fetchWordsByCategory(activeCategory)
-			.then(data => setCards(data))
+			.then(data => {
+				setWords(data);
+				setOrder(data.map(word => word.id));
+			})
 			.catch(console.error);
 	}, [activeCategory]);
 
 
-
-
-	// const [hiddenWords, setHiddenWords] = useState(() => {
-	// 	const stored = localStorage.getItem('hiddenWords');
-	// 	return stored ? JSON.parse(stored) : [];
-	// });
-
-	const [hiddenWords, setHiddenWords] = useState(() => {
-		return JSON.parse(localStorage.getItem('hiddenWords')) || [];
-	});
 
 	// useEffect(() => {
 	// 	const ids = categories.find(h => h._id === activeCategory)?.items || [];
@@ -55,24 +60,33 @@ function App() {
 	}, [hiddenWords]);
 
 	function handleCardsNav(operation) {
+		setOrder(prev => {
+			const visible = prev.filter(
+				id => !hiddenWords.includes(id)
+			);
 
-		setCards(prev => {
-			if (prev.length <= 1) return prev;
+			if (visible.length <= 1) return prev;
+
+			let rotated;
 
 			if (operation === 'next') {
-				return [...prev.slice(1), prev[0]];
+				rotated = [...visible.slice(1), visible[0]];
+			} else if (operation === 'prev') {
+				rotated = [
+					visible[visible.length - 1],
+					...visible.slice(0, -1),
+				];
+			} else {
+				return prev;
 			}
 
-			if (operation === 'prev') {
-				return [prev[prev.length - 1], ...prev.slice(0, -1)];
-			}
+			const queue = [...rotated];
 
-			// возвращаем скрытые карточки на свои места в общем порядке
-			// const result = prev.map(id =>
-			// 	hiddenWords.includes(id) ? id : newVisibleOrder.shift()
-			// );
-
-			return prev;
+			return prev.map(id =>
+				hiddenWords.includes(id)
+					? id
+					: queue.shift()
+			);
 		});
 	}
 
@@ -91,8 +105,6 @@ function App() {
 			if (prev.includes(cardId)) return prev;
 			return [...prev, cardId];
 		});
-
-		setCards(prev => prev.filter(card => card.id !== cardId));
 	}
 	
 	const handleRestoreWord = (id) => {
@@ -100,6 +112,11 @@ function App() {
 			prev.filter(hiddenId => hiddenId !== id)
 		);
 	};
+
+	const visibleCards = order
+		.map(id => words.find(word => word.id === id))
+		.filter(word => word && !hiddenWords.includes(word.id));
+	// const currentCard = visibleCards[currentIndex] || null;
 
 	return (
 		<div className="page">
@@ -121,28 +138,26 @@ function App() {
 
 				<Routes>
 					<Route
-						path="/"
+						path="/3000-words"
 						element={
 							<CardsPage
-								cards={cards}
+								cards={visibleCards}
 								cardSide={cardSide}
 								onTurn={handleTurn}
 								onHide={handleCardHide}
 								onNav={handleCardsNav}
 								onCategory={handleCategory}
-								onOpenHidden={() => navigate('/hidden')}
+								onOpenHidden={() => navigate('/3000-words/hidden')}
 								categories={categories}
 							/>
 						}
 					/>
 
 					<Route
-						path="/hidden"
+						path="/3000-words/hidden"
 						element={
 							<HiddenWordsPage
 								hiddenWords={hiddenWords}
-								// allCards={allCards}
-								allCards={cards}
 								onRestore={handleRestoreWord}
 							/>
 						}

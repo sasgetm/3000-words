@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\WordController;
 
 Route::get('/test', function () {
     return [
@@ -19,4 +20,9 @@ Route::get(
 Route::get(
     '/categories/{category}/words',
     [CategoryController::class, 'words']
+);
+
+Route::post(
+    '/words/by-ids',
+    [WordController::class, 'getByIds']
 );
