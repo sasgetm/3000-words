@@ -1,71 +1,71 @@
-# Getting Started with Create React App
+# 3000 Words — English Learning Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Web application for learning the most common English words using flashcards, spaced repetition, and interactive training.
 
-## Available Scripts
+Live demo: http://alexandergetmanets.ru/3000-words/
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+The application helps users memorize English words efficiently through word-cards.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This is a full-stack project with a React frontend and Laravel backend API.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Frontend and backend are separated and communicate via REST API.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- User registration and authentication (under development)
+- Flashcards for learning words
+- Tracking learning progress (under development)
+- Interactive training mode (under development)
+- Responsive interface for desktop and mobile
+- REST API integration
 
-### `npm run build`
+## Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React
+- JavaScript (ES6+)
+- CSS / SCSS
+- REST API
+- Vite
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend
 
-### `npm run eject`
+- Laravel
+- PHP
+- MySQL
+- REST API
+- Authentication
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Other
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Docker
+- Git
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Architecture
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The project uses classic SPA architecture:
 
-## Learn More
+- React frontend (client)
+- Laravel backend (API)
+- MySQL database
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Frontend communicates with backend via REST API.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project status
 
-### Code Splitting
+The project is actively developed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Planned improvements:
+	•	Improve UX
+	•	Add spaced repetition algorithm
+	•	Extend training modes
+	•	Improve user statistics
 
-### Analyzing the Bundle Size
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Alexander Getmanets
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-### `npm run deploy` deploy to gh-pages
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+GitHub: https://github.com/sasgetm
