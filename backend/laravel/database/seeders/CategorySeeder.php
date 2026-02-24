@@ -18,7 +18,7 @@ class CategorySeeder extends Seeder
         ]);
 
         // Subcategories: 1..27
-        for ($i = 1; $i <= 29; $i++) {
+        for ($i = 1; $i <= 28; $i++) {
             Category::create([
                 'name' => (string) $i,
                 'slug' => 'hundreds-' . $i,

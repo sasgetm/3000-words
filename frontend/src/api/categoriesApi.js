@@ -1,4 +1,4 @@
 export async function fetchCategories() {
-  const response = await fetch('http://p99996p5.beget.tech/api/categories');
+  const response = await fetch('http://alexandergetmanets.ru/3000-words/backend/public/api/categories');
   return response.json();
 }
