@@ -8,6 +8,7 @@ function CardsPage({
 	onHide,
 	onNav,
 	onOpenHidden,
+	onOpenLogIn,
 	onCategory,
 	categories,
 }) {
@@ -76,6 +77,16 @@ function CardsPage({
 							<path d="M8.5 1.5L12.5 1.5" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
 							<path d="M12.5 1.5V3.5" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
 							<path d="M8.5 1.5V3.5" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+						</svg>
+					</li>
+
+					<li
+						className="menu__item menu__item_login"
+						onClick={onOpenLogIn}
+					>
+						<svg className="menu__item-login-icon" width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="11" cy="6.26089" r="5.26089" stroke="white" stroke-width="2"/>
+						<path d="M11 15C16.254 15 21 19.7412 21 24H11H1C1 19.7412 5.74603 15 11 15Z" stroke="white" stroke-width="2"/>
 						</svg>
 					</li>
 				</ul>

@@ -2,6 +2,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import CardsPage from './pages/CardsPage';
 import HiddenWordsPage from './pages/HiddenWordsPage';
+import LogInPage from './pages/LogInPage';
 
 // import logo from './logo.svg';
 import { useEffect, useState } from 'react';
@@ -18,7 +19,6 @@ function App() {
 	const [activeCategory, setActiveCategory] = useState(2);
 	const [cardSide, setCardSide] = useState('a');
 	const [categories, setCategories] = useState([]);
-
 
 	// const [hiddenWords, setHiddenWords] = useState(() => {
 	// 	const stored = localStorage.getItem('hiddenWords');
@@ -148,6 +148,7 @@ function App() {
 								onNav={handleCardsNav}
 								onCategory={handleCategory}
 								onOpenHidden={() => navigate('/3000-words/hidden')}
+								onOpenLogIn={() => navigate('/3000-words/login/')}
 								categories={categories}
 							/>
 						}
@@ -160,6 +161,13 @@ function App() {
 								hiddenWords={hiddenWords}
 								onRestore={handleRestoreWord}
 							/>
+						}
+					/>
+
+					<Route
+						path="/3000-words/login"
+						element={
+							<LogInPage />
 						}
 					/>
 				</Routes>
