@@ -19,6 +19,8 @@ function App() {
 	const [activeCategory, setActiveCategory] = useState(2);
 	const [cardSide, setCardSide] = useState('a');
 	const [categories, setCategories] = useState([]);
+	const [isLogged, setIsLogged] = useState(false);
+	const [userLogin, setUserLogin] = useState('');
 
 	// const [hiddenWords, setHiddenWords] = useState(() => {
 	// 	const stored = localStorage.getItem('hiddenWords');
@@ -118,6 +120,7 @@ function App() {
 		.filter(word => word && !hiddenWords.includes(word.id));
 	// const currentCard = visibleCards[currentIndex] || null;
 
+
 	return (
 		<div className="page">
 			{/* <header className="App-header">
@@ -167,7 +170,10 @@ function App() {
 					<Route
 						path="/3000-words/login"
 						element={
-							<LogInPage />
+							<LogInPage
+								isLogged={isLogged}
+								userLogin={userLogin}
+							/>
 						}
 					/>
 				</Routes>

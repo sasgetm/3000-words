@@ -4,7 +4,7 @@ import Input from './../components/Input';
 import Button from './../components/Button';
 import fetchLogin from './../api/loginApi';
 
-function LogInPage() {
+function LogInPage({ isLoggedIn, userLogin }) {
 	const [isRegister, setIsRegister] = useState(false);
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
@@ -60,6 +60,24 @@ function LogInPage() {
 		} finally {
 			setIsLoading(false);
 		}
+	}
+
+	if (isLoggedIn) {
+		return (
+			<>
+			{/* <div className="login login_page"> */}
+				<Link to="/3000-words/" className="ago-button button-48">
+					←
+				</Link>
+
+				<div className="login__container">
+					<h1 className="login__title">Здравствуйте, {userLogin}</h1>
+				</div>
+
+
+			{/* </div> */}
+			</>
+		)
 	}
 
 	return (

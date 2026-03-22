@@ -4,15 +4,46 @@ export default async function fetchLogin(isRegister, loginToSend, passwordToSend
       ? 'http://alexandergetmanets.ru/3000-words/backend/public/api/register'
       : 'http://alexandergetmanets.ru/3000-words/backend/public/api/login',
     {
-      metod: 'POST',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         login: loginToSend,
         password: passwordToSend,
-      })
+      }),
     }
   );
-  return response();
+
+  const data = await response.json();
+
+  if (data.access_token) {
+    localStorage.setItem('auth_token', data.access_token);
+  }
+  return data;
+}
+
+export function getToken() {
+  return localStorage.getItem('auth_token');
+}
+
+// Автоматически добавляем Authorization header
+export async function authFetch(url, options = {}) {
+  const token = getToken();
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(options.headers || {}),
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const response = await fetch(url, {
+    ...options,
+    headers,
+  });
+
+  return response.json();
 }
