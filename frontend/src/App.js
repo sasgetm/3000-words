@@ -6,6 +6,7 @@ import LogInPage from './pages/LogInPage';
 
 // import logo from './logo.svg';
 import { useEffect, useState } from 'react';
+import { getToken } from './api/loginApi';
 import './styles/normalize.css';
 import './App.css';
 // import { cardsArr } from './utils/constants.js';
@@ -21,6 +22,14 @@ function App() {
 	const [categories, setCategories] = useState([]);
 	const [isLogged, setIsLogged] = useState(false);
 	const [userLogin, setUserLogin] = useState('');
+
+	useEffect(() => {
+		const token = getToken();
+
+		if (token) {
+			setIsLogged(true);
+		}
+	}, []);
 
 	// const [hiddenWords, setHiddenWords] = useState(() => {
 	// 	const stored = localStorage.getItem('hiddenWords');
@@ -173,6 +182,8 @@ function App() {
 							<LogInPage
 								isLogged={isLogged}
 								userLogin={userLogin}
+								setIsLogged={setIsLogged}
+								setUserLogin={setUserLogin}
 							/>
 						}
 					/>

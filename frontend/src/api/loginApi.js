@@ -1,8 +1,10 @@
 export default async function fetchLogin(isRegister, loginToSend, passwordToSend) {
   const response = await fetch(
     isRegister
-      ? 'http://alexandergetmanets.ru/3000-words/backend/public/api/register'
-      : 'http://alexandergetmanets.ru/3000-words/backend/public/api/login',
+      // ? 'http://alexandergetmanets.ru/3000-words/backend/public/api/register'
+      // : 'http://alexandergetmanets.ru/3000-words/backend/public/api/login',
+      ? 'http://localhost:8080/api/register'
+      : 'http://localhost:8080/api/login',
     {
       method: 'POST',
       headers: {

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\User; // Eloquent модель пользователя (работа с таблицей users)
 use Illuminate\Http\Request; // Класс HTTP‑запроса Laravel
 use Illuminate\Support\Facades\Auth; // Facade для системы аутентификации

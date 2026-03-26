@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\WordController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\AuthController;
 
 Route::get('/test', function () {
     return [

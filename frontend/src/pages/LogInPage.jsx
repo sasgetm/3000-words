@@ -4,7 +4,7 @@ import Input from './../components/Input';
 import Button from './../components/Button';
 import fetchLogin from './../api/loginApi';
 
-function LogInPage({ isLoggedIn, userLogin }) {
+function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 	const [isRegister, setIsRegister] = useState(false);
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
@@ -43,17 +43,15 @@ function LogInPage({ isLoggedIn, userLogin }) {
 		setError('');
 
 		try {
-			const response = await fetchLogin(isRegister, loginToSend, passwordToSend)
+			const data = await fetchLogin(isRegister, loginToSend, passwordToSend);
 
-			if (!response.ok) {
-				const data = await response.json().catch(() => ({}));
+			// если сервер вернул токен — считаем пользователя авторизованным
+			if (data.access_token) {
+				setIsLogged(true);
+				setUserLogin(loginToSend);
+			} else {
 				throw new Error(data.message || 'Ошибка авторизации');
 			}
-
-			const data = await response.json();
-
-			// TODO: сохранить токен или данные пользователя
-			console.log('Success:', data);
 
 		} catch (err) {
 			setError(err.message || 'Произошла ошибка');
@@ -62,7 +60,11 @@ function LogInPage({ isLoggedIn, userLogin }) {
 		}
 	}
 
-	if (isLoggedIn) {
+	function handleLogout() {
+		
+	}
+
+	if (isLogged) {
 		return (
 			<>
 			{/* <div className="login login_page"> */}
@@ -72,6 +74,12 @@ function LogInPage({ isLoggedIn, userLogin }) {
 
 				<div className="login__container">
 					<h1 className="login__title">Здравствуйте, {userLogin}</h1>
+
+					<Button
+						text='Выйти'
+						onclick={handleLogout}
+						// type="submit"
+					/>
 				</div>
 
 
