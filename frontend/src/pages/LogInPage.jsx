@@ -48,7 +48,12 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 			// если сервер вернул токен — считаем пользователя авторизованным
 			if (data.access_token) {
 				setIsLogged(true);
-				setUserLogin(loginToSend);
+
+				if (data.user && data.user.login) {
+					setUserLogin(data.user.login);
+				} else {
+					setUserLogin(loginToSend);
+				}
 			} else {
 				throw new Error(data.message || 'Ошибка авторизации');
 			}
@@ -61,7 +66,12 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 	}
 
 	function handleLogout() {
-		
+		// удаляем токен и логин из localStorage
+		localStorage.removeItem('auth_token');
+
+		// обновляем состояние приложения
+		setIsLogged(false);
+		setUserLogin('');
 	}
 
 	if (isLogged) {

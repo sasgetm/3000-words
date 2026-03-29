@@ -6,7 +6,7 @@ import LogInPage from './pages/LogInPage';
 
 // import logo from './logo.svg';
 import { useEffect, useState } from 'react';
-import { getToken } from './api/loginApi';
+import { getToken, fetchCurrentUser } from './api/loginApi';
 import './styles/normalize.css';
 import './App.css';
 // import { cardsArr } from './utils/constants.js';
@@ -26,9 +26,20 @@ function App() {
 	useEffect(() => {
 		const token = getToken();
 
-		if (token) {
-			setIsLogged(true);
-		}
+		if (!token) return;
+
+		fetchCurrentUser()
+			.then((user) => {
+				if (user && user.login) {
+					setIsLogged(true);
+					setUserLogin(user.login);
+				}
+			})
+			.catch(() => {
+				localStorage.removeItem('auth_token');
+				setIsLogged(false);
+				setUserLogin('');
+			});
 	}, []);
 
 	// const [hiddenWords, setHiddenWords] = useState(() => {
@@ -160,7 +171,7 @@ function App() {
 								onNav={handleCardsNav}
 								onCategory={handleCategory}
 								onOpenHidden={() => navigate('/3000-words/hidden')}
-								onOpenLogIn={() => navigate('/3000-words/login/')}
+								onOpenLogIn={() => navigate('/3000-words/login')}
 								categories={categories}
 							/>
 						}

@@ -1,10 +1,11 @@
+// const API = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
+const API = 'http://localhost:8080/api';
+
 export default async function fetchLogin(isRegister, loginToSend, passwordToSend) {
   const response = await fetch(
     isRegister
-      // ? 'http://alexandergetmanets.ru/3000-words/backend/public/api/register'
-      // : 'http://alexandergetmanets.ru/3000-words/backend/public/api/login',
-      ? 'http://localhost:8080/api/register'
-      : 'http://localhost:8080/api/login',
+      ? `${API}/register`
+      : `${API}/login`,
     {
       method: 'POST',
       headers: {
@@ -48,4 +49,9 @@ export async function authFetch(url, options = {}) {
   });
 
   return response.json();
+}
+
+// Получение текущего пользователя
+export async function fetchCurrentUser() {
+  return authFetch(`${API}/me`);
 }
