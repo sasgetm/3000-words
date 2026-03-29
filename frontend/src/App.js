@@ -2,9 +2,11 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import CardsPage from './pages/CardsPage';
 import HiddenWordsPage from './pages/HiddenWordsPage';
+import LogInPage from './pages/LogInPage';
 
 // import logo from './logo.svg';
 import { useEffect, useState } from 'react';
+import { getToken, fetchCurrentUser } from './api/loginApi';
 import './styles/normalize.css';
 import './App.css';
 // import { cardsArr } from './utils/constants.js';
@@ -18,7 +20,27 @@ function App() {
 	const [activeCategory, setActiveCategory] = useState(2);
 	const [cardSide, setCardSide] = useState('a');
 	const [categories, setCategories] = useState([]);
+	const [isLogged, setIsLogged] = useState(false);
+	const [userLogin, setUserLogin] = useState('');
 
+	useEffect(() => {
+		const token = getToken();
+
+		if (!token) return;
+
+		fetchCurrentUser()
+			.then((user) => {
+				if (user && user.login) {
+					setIsLogged(true);
+					setUserLogin(user.login);
+				}
+			})
+			.catch(() => {
+				localStorage.removeItem('auth_token');
+				setIsLogged(false);
+				setUserLogin('');
+			});
+	}, []);
 
 	// const [hiddenWords, setHiddenWords] = useState(() => {
 	// 	const stored = localStorage.getItem('hiddenWords');
@@ -118,6 +140,7 @@ function App() {
 		.filter(word => word && !hiddenWords.includes(word.id));
 	// const currentCard = visibleCards[currentIndex] || null;
 
+
 	return (
 		<div className="page">
 			{/* <header className="App-header">
@@ -148,6 +171,7 @@ function App() {
 								onNav={handleCardsNav}
 								onCategory={handleCategory}
 								onOpenHidden={() => navigate('/3000-words/hidden')}
+								onOpenLogIn={() => navigate('/3000-words/login')}
 								categories={categories}
 							/>
 						}
@@ -159,6 +183,18 @@ function App() {
 							<HiddenWordsPage
 								hiddenWords={hiddenWords}
 								onRestore={handleRestoreWord}
+							/>
+						}
+					/>
+
+					<Route
+						path="/3000-words/login"
+						element={
+							<LogInPage
+								isLogged={isLogged}
+								userLogin={userLogin}
+								setIsLogged={setIsLogged}
+								setUserLogin={setUserLogin}
 							/>
 						}
 					/>
