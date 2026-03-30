@@ -1,5 +1,5 @@
-// const API = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
-const API = 'http://localhost:8080/api';
+const API = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
+// const API = 'http://localhost:8080/api';
 
 export default async function fetchLogin(isRegister, loginToSend, passwordToSend) {
   const response = await fetch(
