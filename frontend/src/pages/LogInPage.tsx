@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import Input from './../components/Input';
-import Button from './../components/Button';
-import fetchLogin from './../api/loginApi';
+import { useState, FormEvent } from 'react';
+// @ts-ignore - JS component without TS types yet
+import Input from '../components/Input';
+// @ts-ignore - JS component without TS types yet
+import Button from '../components/Button';
+import fetchLogin from '../api/loginApi';
 
-function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
+type LogInPageProps = {
+	isLogged: boolean
+	userLogin: string
+	setIsLogged: (value: boolean) => void
+	setUserLogin: (value: string) => void
+}
+
+function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }: LogInPageProps) {
 	const [isRegister, setIsRegister] = useState(false);
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
@@ -30,8 +39,7 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 	function handleSetIsRegister () {
 		setIsRegister(!isRegister);
 	}
-
-	async function handleSubmit(e) {
+	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
 		const loginToSend = trimmedLogin;
@@ -58,8 +66,12 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 				throw new Error(data.message || 'Ошибка авторизации');
 			}
 
-		} catch (err) {
-			setError(err.message || 'Произошла ошибка');
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				setError(err.message);
+			} else {
+				setError('Произошла ошибка');
+			}
 		} finally {
 			setIsLoading(false);
 		}
@@ -118,7 +130,7 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 							placeholder='Логин (не кириллица)'
 							id='login'
 							value={login}
-							onChange={(e) => setLogin(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLogin(e.target.value)}
 							required={true}
 							pattern="^[a-zA-Z0-9_]+$"
 						/>
@@ -129,7 +141,7 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 							placeholder='Пароль (от 6 символов)'
 							id='password'
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
 							required={true}
 						/>
 					</div>
