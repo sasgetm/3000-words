@@ -4,16 +4,16 @@ import { useState, FormEvent } from 'react';
 import Input from '../components/Input';
 // @ts-ignore - JS component without TS types yet
 import Button from '../components/Button';
-import fetchLogin from '../api/loginApi';
+import fetchLogin from '../api/authApi';
 
-type LogInPageProps = {
+type AuthPageProps = {
 	isLogged: boolean
 	userLogin: string
 	setIsLogged: (value: boolean) => void
 	setUserLogin: (value: string) => void
 }
 
-function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }: LogInPageProps) {
+function AuthPage({ isLogged, userLogin, setIsLogged, setUserLogin }: AuthPageProps) {
 	const [isRegister, setIsRegister] = useState(false);
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
@@ -168,4 +168,4 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }: LogInPage
 	);
 }
 
-export default LogInPage;
+export default AuthPage;

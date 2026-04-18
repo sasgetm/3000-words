@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Card from './../components/Card';
+import Card from '../components/Card';
 
 function CardsPage({
 	cards,
@@ -8,7 +8,7 @@ function CardsPage({
 	onHide,
 	onNav,
 	onOpenHidden,
-	onOpenLogIn,
+	onOpenAuth,
 	onCategory,
 	categories,
 }) {
@@ -82,7 +82,7 @@ function CardsPage({
 
 					<li
 						className="menu__item menu__item_login"
-						onClick={onOpenLogIn}
+						onClick={onOpenAuth}
 					>
 						<svg className="menu__item-login-icon" width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<circle cx="11" cy="6.26089" r="5.26089" stroke="white" strokeWidth="2"/>
