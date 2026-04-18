@@ -99,7 +99,7 @@ function AuthPage({ isLogged, userLogin, setIsLogged, setUserLogin }: AuthPagePr
 
 					<Button
 						text='Выйти'
-						onclick={handleLogout}
+						onClick={handleLogout}
 						// type="submit"
 					/>
 				</div>

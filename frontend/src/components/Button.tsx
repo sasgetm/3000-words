@@ -1,9 +1,25 @@
-function Button({ type = 'button', className = '', onclick, text, disabled = false }) {
+import React from 'react';
+
+type ButtonProps = {
+  type?: 'button' | 'submit' | 'reset'
+  className?: string
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  text: string
+  disabled?: boolean
+}
+
+function Button({
+  type = 'button',
+  className = '',
+  onClick,
+  text,
+  disabled = false,
+}: ButtonProps) {
   return (
-    <button 
-      type={type} 
+    <button
+      type={type}
       className={`button ${className}`}
-      onClick={onclick}
+      onClick={onClick}
       disabled={disabled}
     >
       {text}

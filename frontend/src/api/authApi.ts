@@ -1,4 +1,5 @@
 import { AuthResponse } from '../types/auth';
+import { User } from '../types/user';
 
 const API = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
 // const API = 'http://localhost:8080/api';
@@ -37,10 +38,10 @@ export function getToken(): string | null {
 }
 
 // Автоматически добавляем Authorization header
-export async function authFetch(
+export async function authFetch<T>(
   url: string,
   options: RequestInit = {}
-): Promise<any> {
+): Promise<T> {
   const token = getToken();
 
   const headers: Record<string, string> = {
@@ -61,6 +62,6 @@ export async function authFetch(
 }
 
 // Получение текущего пользователя
-export async function fetchCurrentUser(): Promise<any> {
-  return authFetch(`${API}/me`);
+export async function fetchCurrentUser(): Promise<User> {
+  return authFetch<User>(`${API}/me`);
 }
