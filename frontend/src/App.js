@@ -2,11 +2,11 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import CardsPage from './pages/CardsPage';
 import HiddenWordsPage from './pages/HiddenWordsPage';
-import LogInPage from './pages/LogInPage';
+import AuthPage from './pages/AuthPage';
 
 // import logo from './logo.svg';
 import { useEffect, useState } from 'react';
-import { getToken, fetchCurrentUser } from './api/loginApi';
+import { fetchCurrentUser } from './api/authApi';
 import './styles/normalize.css';
 import './App.css';
 // import { cardsArr } from './utils/constants.js';
@@ -24,7 +24,7 @@ function App() {
 	const [userLogin, setUserLogin] = useState('');
 
 	useEffect(() => {
-		const token = getToken();
+		const token = localStorage.getItem('auth_token');
 
 		if (!token) return;
 
@@ -171,7 +171,7 @@ function App() {
 								onNav={handleCardsNav}
 								onCategory={handleCategory}
 								onOpenHidden={() => navigate('/3000-words/hidden')}
-								onOpenLogIn={() => navigate('/3000-words/login')}
+								onOpenAuth={() => navigate('/3000-words/auth')}
 								categories={categories}
 							/>
 						}
@@ -188,9 +188,9 @@ function App() {
 					/>
 
 					<Route
-						path="/3000-words/login"
+						path="/3000-words/auth"
 						element={
-							<LogInPage
+							<AuthPage
 								isLogged={isLogged}
 								userLogin={userLogin}
 								setIsLogged={setIsLogged}

@@ -69,3 +69,13 @@ Planned improvements:
 Alexander Getmanets
 
 GitHub: https://github.com/sasgetm
+
+## Start and build
+
+Frontend:
+`cd frontend`
+`npm start`
+`npm run build`
+
+Backend
+`cd backend/laravel`

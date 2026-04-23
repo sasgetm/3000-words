@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import Input from './../components/Input';
-import Button from './../components/Button';
-import fetchLogin from './../api/loginApi';
+import { useState, FormEvent } from 'react';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import { login as loginApi, register as registerApi } from '../api/authApi';
 
-function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
+type AuthPageProps = {
+	isLogged: boolean
+	userLogin: string
+	setIsLogged: (value: boolean) => void
+	setUserLogin: (value: string) => void
+}
+
+function AuthPage({ isLogged, userLogin, setIsLogged, setUserLogin }: AuthPageProps) {
 	const [isRegister, setIsRegister] = useState(false);
 	const [login, setLogin] = useState('');
 	const [password, setPassword] = useState('');
@@ -30,8 +37,7 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 	function handleSetIsRegister () {
 		setIsRegister(!isRegister);
 	}
-
-	async function handleSubmit(e) {
+	async function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
 		const loginToSend = trimmedLogin;
@@ -43,7 +49,9 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 		setError('');
 
 		try {
-			const data = await fetchLogin(isRegister, loginToSend, passwordToSend);
+			const data = isRegister
+				? await registerApi(loginToSend, passwordToSend)
+				: await loginApi(loginToSend, passwordToSend);
 
 			// если сервер вернул токен — считаем пользователя авторизованным
 			if (data.access_token) {
@@ -58,8 +66,12 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 				throw new Error(data.message || 'Ошибка авторизации');
 			}
 
-		} catch (err) {
-			setError(err.message || 'Произошла ошибка');
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				setError(err.message);
+			} else {
+				setError('Произошла ошибка');
+			}
 		} finally {
 			setIsLoading(false);
 		}
@@ -87,7 +99,7 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 
 					<Button
 						text='Выйти'
-						onclick={handleLogout}
+						onClick={handleLogout}
 						// type="submit"
 					/>
 				</div>
@@ -118,7 +130,7 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 							placeholder='Логин (не кириллица)'
 							id='login'
 							value={login}
-							onChange={(e) => setLogin(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLogin(e.target.value)}
 							required={true}
 							pattern="^[a-zA-Z0-9_]+$"
 						/>
@@ -129,7 +141,7 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 							placeholder='Пароль (от 6 символов)'
 							id='password'
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
 							required={true}
 						/>
 					</div>
@@ -156,4 +168,4 @@ function LogInPage({ isLogged, userLogin, setIsLogged, setUserLogin }) {
 	);
 }
 
-export default LogInPage;
+export default AuthPage;
