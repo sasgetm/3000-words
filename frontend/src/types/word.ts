@@ -1,7 +1,11 @@
 export type Word = {
   id: number
-  word: string
-  translation: string
-  created_at?: string
-  updated_at?: string
+  word_en: string
+  word_ru: string
+  created_at: string | null
+  updated_at: string | null
+  pivot?: {
+    category_id: number
+    word_id: number
+  }
 }

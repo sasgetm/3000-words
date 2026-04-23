@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
-type CardData = {
-  _id: string
-  word_en: string
-  word_ru: string
-}
+import { Word } from '../types/word';
 
 type CardProps = {
-  card: CardData
+  card: Word
   side: 'a' | 'b'
-  onHide: (id: string) => void
+  onHide: (id: number) => void
 }
 
 function Card({ card, side, onHide }: CardProps) {
@@ -24,7 +19,7 @@ function Card({ card, side, onHide }: CardProps) {
   }
 
   function handleCardHideClick() {
-    onHide(card._id);
+    onHide(card.id);
   }
 
   return (

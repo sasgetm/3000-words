@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState, FormEvent } from 'react';
-// @ts-ignore - JS component without TS types yet
 import Input from '../components/Input';
-// @ts-ignore - JS component without TS types yet
 import Button from '../components/Button';
-import fetchLogin from '../api/authApi';
+import { login as loginApi, register as registerApi } from '../api/authApi';
 
 type AuthPageProps = {
 	isLogged: boolean
@@ -51,7 +49,9 @@ function AuthPage({ isLogged, userLogin, setIsLogged, setUserLogin }: AuthPagePr
 		setError('');
 
 		try {
-			const data = await fetchLogin(isRegister, loginToSend, passwordToSend);
+			const data = isRegister
+				? await registerApi(loginToSend, passwordToSend)
+				: await loginApi(loginToSend, passwordToSend);
 
 			// если сервер вернул токен — считаем пользователя авторизованным
 			if (data.access_token) {

@@ -1,67 +1,43 @@
+import { api } from './api';
 import { AuthResponse } from '../types/auth';
 import { User } from '../types/user';
 
-const API = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
-// const API = 'http://localhost:8080/api';
-
-export default async function fetchLogin(
-  isRegister: boolean,
-  loginToSend: string,
-  passwordToSend: string
+export async function login(
+  login: string,
+  password: string
 ): Promise<AuthResponse> {
-  const response = await fetch(
-    isRegister
-      ? `${API}/register`
-      : `${API}/login`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        login: loginToSend,
-        password: passwordToSend,
-      }),
-    }
-  );
-
-  const data = await response.json();
+  const data = await api.post<AuthResponse>('/login', {
+    login,
+    password,
+  });
 
   if (data.access_token) {
     localStorage.setItem('auth_token', data.access_token);
   }
+
   return data;
 }
 
-export function getToken(): string | null {
-  return localStorage.getItem('auth_token');
-}
-
-// Автоматически добавляем Authorization header
-export async function authFetch<T>(
-  url: string,
-  options: RequestInit = {}
-): Promise<T> {
-  const token = getToken();
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...((options.headers as Record<string, string>) || {}),
-  };
-
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  const response = await fetch(url, {
-    ...options,
-    headers,
+export async function register(
+  login: string,
+  password: string
+): Promise<AuthResponse> {
+  const data = await api.post<AuthResponse>('/register', {
+    login,
+    password,
   });
 
-  return response.json();
+  if (data.access_token) {
+    localStorage.setItem('auth_token', data.access_token);
+  }
+
+  return data;
 }
 
-// Получение текущего пользователя
 export async function fetchCurrentUser(): Promise<User> {
-  return authFetch<User>(`${API}/me`);
+  return api.get<User>('/me');
+}
+
+export function logout() {
+  localStorage.removeItem('auth_token');
 }

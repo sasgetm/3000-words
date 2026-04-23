@@ -6,7 +6,7 @@ import AuthPage from './pages/AuthPage';
 
 // import logo from './logo.svg';
 import { useEffect, useState } from 'react';
-import { getToken, fetchCurrentUser } from './api/authApi';
+import { fetchCurrentUser } from './api/authApi';
 import './styles/normalize.css';
 import './App.css';
 // import { cardsArr } from './utils/constants.js';
@@ -24,7 +24,7 @@ function App() {
 	const [userLogin, setUserLogin] = useState('');
 
 	useEffect(() => {
-		const token = getToken();
+		const token = localStorage.getItem('auth_token');
 
 		if (!token) return;
 
