@@ -11,6 +11,7 @@ function CardsPage({
 	onOpenAuth,
 	onCategory,
 	categories,
+	activeCategory,
 }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -54,7 +55,7 @@ function CardsPage({
 						parent.children?.map(child => (
 							<li
 								key={child.id}
-								className="menu__item"
+								className={`menu__item ${child.id === activeCategory ? 'active' : ''}`}
 								onClick={() => {
 									onCategory(child.id);
 									setIsMenuOpen(false);

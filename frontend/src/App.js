@@ -173,6 +173,7 @@ function App() {
 								onOpenHidden={() => navigate('/3000-words/hidden')}
 								onOpenAuth={() => navigate('/3000-words/auth')}
 								categories={categories}
+								activeCategory={activeCategory}
 							/>
 						}
 					/>
