@@ -2,35 +2,13 @@ import React from 'react';
 
 type LoaderProps = {
   className?: string
-  size?: number
 }
 
-function Loader({ className = '', size = 48 }: LoaderProps) {
+function Loader({ className = '' }: LoaderProps) {
   return (
-    <div className={`loader ${className}`} style={{ width: size, height: size }}>
-      <svg
-        className="loader__icon"
-        viewBox="0 0 50 50"
-        style={{ width: size, height: size }}
-      >
-        <circle
-          className="loader__path"
-          cx="25"
-          cy="25"
-          r="20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="4"
-        />
-        <path
-          className="loader__arrow"
-          d="M25 5 L25 15 M25 15 L30 10 M25 15 L20 10"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+    <div className={`loader ${className}`}>
+      <svg  className="loader__icon" width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M26.1075 8.64637C24.791 6.03575 22.6329 3.94515 19.9817 2.71227C17.3306 1.47939 14.3412 1.17621 11.4965 1.85171C8.65184 2.52721 6.11792 4.14195 4.30406 6.43509C2.4902 8.72824 1.50232 11.5659 1.5 14.4897C1.49768 17.4135 2.48105 20.2527 4.29127 22.5487C6.10148 24.8447 8.63284 26.4635 11.4765 27.1435C14.3201 27.8235 17.3099 27.5251 19.963 26.2964C22.6161 25.0677 24.7776 22.9806 26.0982 20.3721" stroke="#4B4F67" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
   );

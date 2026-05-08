@@ -97,7 +97,7 @@ function CardsPage({
 
 			{isLoading && (
 				<div className="loader-overlay">
-					<Loader size={64} />
+					<Loader className={'button-48'} />
 				</div>
 			)}
 

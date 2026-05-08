@@ -153,7 +153,7 @@ function AuthPage({ isLogged, userLogin, setIsLogged, setUserLogin }: AuthPagePr
 					/>
 					{isLoading && (
 						<div className="login__loading">
-							<Loader size={32} />
+							<Loader className={'button-48'} />
 						</div>
 					)}
 					{error && (

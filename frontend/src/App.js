@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import CardsPage from './pages/CardsPage';
 import HiddenWordsPage from './pages/HiddenWordsPage';
 import AuthPage from './pages/AuthPage';
-import Loader from './components/Loader';
 
 import { useEffect, useState } from 'react';
 import { fetchCurrentUser } from './api/authApi';
