@@ -4,7 +4,6 @@ import CardsPage from './pages/CardsPage';
 import HiddenWordsPage from './pages/HiddenWordsPage';
 import AuthPage from './pages/AuthPage';
 
-// import logo from './logo.svg';
 import { useEffect, useState } from 'react';
 import { fetchCurrentUser } from './api/authApi';
 import './styles/normalize.css';
@@ -22,6 +21,8 @@ function App() {
 	const [categories, setCategories] = useState([]);
 	const [isLogged, setIsLogged] = useState(false);
 	const [userLogin, setUserLogin] = useState('');
+	const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+	const [isLoadingWords, setIsLoadingWords] = useState(true);
 
 	useEffect(() => {
 		const token = localStorage.getItem('auth_token');
@@ -54,20 +55,24 @@ function App() {
 	// const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
+		setIsLoadingCategories(true);
 		fetchCategories()
 			.then(data => setCategories(data))
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setIsLoadingCategories(false));
 	}, []);
 
 	useEffect(() => {
 		if (!activeCategory) return;
 
+		setIsLoadingWords(true);
 		fetchWordsByCategory(activeCategory)
 			.then(data => {
 				setWords(data);
 				setOrder(data.map(word => word.id));
 			})
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setIsLoadingWords(false));
 	}, [activeCategory]);
 
 
@@ -173,6 +178,8 @@ function App() {
 								onOpenHidden={() => navigate('/3000-words/hidden')}
 								onOpenAuth={() => navigate('/3000-words/auth')}
 								categories={categories}
+								activeCategory={activeCategory}
+								isLoading={isLoadingCategories || isLoadingWords}
 							/>
 						}
 					/>

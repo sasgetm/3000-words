@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState, FormEvent } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import Loader from '../components/Loader';
 import { login as loginApi, register as registerApi } from '../api/authApi';
 
 type AuthPageProps = {
@@ -146,10 +147,15 @@ function AuthPage({ isLogged, userLogin, setIsLogged, setUserLogin }: AuthPagePr
 						/>
 					</div>
 					<Button
-						text={isLoading ? 'Загрузка...' : (isRegister ? 'Зарегистрироваться' : 'Войти')}
+						text={isRegister ? 'Зарегистрироваться' : 'Войти'}
 						type="submit"
 						disabled={!isFormValid || isLoading}
 					/>
+					{isLoading && (
+						<div className="login__loading">
+							<Loader className={'button-48'} />
+						</div>
+					)}
 					{error && (
 						<p className="login__error">
 							{error}

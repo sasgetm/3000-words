@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Card from '../components/Card';
+import Loader from '../components/Loader';
 
 function CardsPage({
 	cards,
@@ -11,6 +12,8 @@ function CardsPage({
 	onOpenAuth,
 	onCategory,
 	categories,
+	activeCategory,
+	isLoading,
 }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -54,7 +57,7 @@ function CardsPage({
 						parent.children?.map(child => (
 							<li
 								key={child.id}
-								className="menu__item"
+								className={`menu__item ${child.id === activeCategory ? 'active' : ''}`}
 								onClick={() => {
 									onCategory(child.id);
 									setIsMenuOpen(false);
@@ -91,6 +94,12 @@ function CardsPage({
 					</li>
 				</ul>
 			</div>
+
+			{isLoading && (
+				<div className="loader-overlay">
+					<Loader className={'button-48'} />
+				</div>
+			)}
 
 			<div className="cards-container">
 				{[...cards].reverse().map(card => (
