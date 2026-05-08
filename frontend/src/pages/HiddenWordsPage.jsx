@@ -1,19 +1,24 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchWordsByIds } from './../api/wordsApi';
+import Loader from '../components/Loader';
 
 function HiddenWordsPage({ hiddenWords, onRestore }) {
 	const [words, setWords] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		if (!hiddenWords.length) {
 			setWords([]);
+			setIsLoading(false);
 			return;
 		}
 
+		setIsLoading(true);
 		fetchWordsByIds(hiddenWords)
 			.then(setWords)
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setIsLoading(false));
 	}, [hiddenWords]);
 
 	return (
@@ -22,6 +27,12 @@ function HiddenWordsPage({ hiddenWords, onRestore }) {
 			<Link to="/3000-words/" className="ago-button button-48">
 				←
 			</Link>
+
+			{isLoading && (
+				<div className="loader-overlay">
+					<Loader size={64} />
+				</div>
+			)}
 
 			<ul className="hidden-words__list">
 				{words.map(word => (

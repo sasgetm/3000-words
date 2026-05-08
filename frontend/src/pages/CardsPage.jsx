@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Card from '../components/Card';
+import Loader from '../components/Loader';
 
 function CardsPage({
 	cards,
@@ -12,6 +13,7 @@ function CardsPage({
 	onCategory,
 	categories,
 	activeCategory,
+	isLoading,
 }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -92,6 +94,12 @@ function CardsPage({
 					</li>
 				</ul>
 			</div>
+
+			{isLoading && (
+				<div className="loader-overlay">
+					<Loader size={64} />
+				</div>
+			)}
 
 			<div className="cards-container">
 				{[...cards].reverse().map(card => (

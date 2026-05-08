@@ -437,3 +437,64 @@
 	cursor: pointer;
 	color: var(--regular-text);
 }
+
+
+
+
+
+
+
+
+.loader-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--regular-bg);
+	z-index: 10;
+}
+
+.login__loading {
+	display: flex;
+	justify-content: center;
+	margin-top: 16px;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b4f67;
+}
+
+.loader__icon {
+  animation: loader-rotate 1s linear infinite;
+}
+
+.loader__path {
+  opacity: 0.25;
+}
+
+.loader__arrow {
+  transform-origin: 25px 25px;
+  animation: loader-arrow 1s linear infinite;
+}
+
+@keyframes loader-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-arrow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
