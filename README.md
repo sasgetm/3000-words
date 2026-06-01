@@ -1,29 +1,30 @@
-# 3000 Words — English Learning Web Application
+# 3000 Words — Веб-приложение для изучения английского языка
 
-Web application for learning the most common English words using flashcards, spaced repetition, and interactive training.
+Приложение для изучения самых распространённых английских слов с помощью карточек, интервального повторения и интерактивных тренировок.
 
-Live demo: http://alexandergetmanets.ru/3000-words/
+Демо: http://alexandergetmanets.ru/3000-words/
 
-## Overview
+## Обзор
 
-The application helps users memorize English words efficiently through word-cards.
+Приложение помогает пользователям эффективно запоминать английские слова с помощью карточек.
 
-This is a full-stack project with a React frontend and Laravel backend API.
+Приложение с фронтендом на React и бэкендом на Laravel.
 
-Frontend and backend are separated and communicate via REST API.
+Фронтенд и бэкенд разделены и общаются через REST API.
 
-## Features
+## Возможности
 
-- User registration and authentication (under development)
-- Flashcards for learning words
-- Tracking learning progress (under development)
-- Interactive training mode (under development)
-- Responsive interface for desktop and mobile
-- REST API integration
+- Регистрация и аутентификация пользователей
+- Карточки для изучения слов
+- Скрытие изученных слов
+- Отслеживание прогресса обучения (в разработке)
+- Интерактивный режим тренировки (в разработке)
+- Адаптивный интерфейс для десктопа и мобильных устройств
+- Интеграция с REST API
 
-## Tech Stack
+## Технологии
 
-### Frontend
+### Фронтенд
 
 - React
 - JavaScript (ES6+)
@@ -31,51 +32,51 @@ Frontend and backend are separated and communicate via REST API.
 - REST API
 - Vite
 
-### Backend
+### Бэкенд
 
 - Laravel
 - PHP
 - MySQL
 - REST API
-- Authentication
+- Аутентификация
 
-### Other
+### Прочее
 
 - Docker
 - Git
 
-## Architecture
+## Архитектура
 
-The project uses classic SPA architecture:
+Проект использует классическую SPA-архитектуру:
 
-- React frontend (client)
-- Laravel backend (API)
-- MySQL database
+- Фронтенд на React (клиент)
+- Бэкенд на Laravel (API)
+- База данных MySQL
 
-Frontend communicates with backend via REST API.
+Фронтенд взаимодействует с бэкендом через REST API.
 
-## Project status
+## Статус проекта
 
-The project is actively developed.
+Проект активно развивается.
 
-Planned improvements:
-	•	Improve UX
-	•	Add spaced repetition algorithm
-	•	Extend training modes
-	•	Improve user statistics
+Запланированные улучшения:
+- Улучшение UX
+- Добавление алгоритма интервального повторения
+- Расширение режимов тренировки
+- Улучшение статистики пользователей
 
-## Author
+## Автор
 
-Alexander Getmanets
+Александр Гетманец
 
 GitHub: https://github.com/sasgetm
 
-## Start and build
+## Запуск и сборка
 
-Frontend:
+Фронтенд:
 `cd frontend`
 `npm start`
 `npm run build`
 
-Backend
+Бэкенд:
 `cd backend/laravel`
