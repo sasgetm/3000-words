@@ -15,8 +15,16 @@ class CategoryController extends Controller
             ->get();
     }
     
-    public function words(Category $category)
+    public function words(Request $request, Category $category)
     {
-        return $category->words()->get();
+        $query = $category->words();
+
+        if ($user = $request->user()) {
+            $query->whereDoesntHave('hiddenByUsers', function ($q) use ($user) {
+                $q->where('users.id', $user->id);
+            });
+        }
+
+        return $query->get();
     }
 }

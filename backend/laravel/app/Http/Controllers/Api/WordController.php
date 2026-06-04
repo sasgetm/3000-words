@@ -12,6 +12,14 @@ class WordController extends Controller
     {
         $ids = $request->input('ids', []);
 
-        return Word::whereIn('id', $ids)->get();
+        $query = Word::whereIn('id', $ids);
+
+        if ($user = $request->user()) {
+            $query->whereDoesntHave('hiddenByUsers', function ($q) use ($user) {
+                $q->where('users.id', $user->id);
+            });
+        }
+
+        return $query->get();
     }
 }
