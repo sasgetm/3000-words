@@ -58,10 +58,11 @@ Web application for learning the most common English words using flashcards, spa
 - `frontend/src/components/Input.tsx` — Reusable input field
 
 ### Frontend API Layer
+All API modules go through the shared HTTP client `frontend/src/api/api.ts` (base URL from `API_BASE` in `utils/constants`, Bearer token, JSON headers, error handling). Do not call raw `fetch` with hardcoded URLs.
 - `frontend/src/api/api.ts` — Base API client / config
 - `frontend/src/api/authApi.ts` — Authentication API calls
-- `frontend/src/api/wordsApi.js` — Words-related API calls
-- `frontend/src/api/categoriesApi.js` — Categories-related API calls
+- `frontend/src/api/wordsApi.ts` — Words-related API calls
+- `frontend/src/api/categoriesApi.ts` — Categories-related API calls
 
 ### Frontend Types & Utils
 - `frontend/src/types/` — TypeScript type definitions

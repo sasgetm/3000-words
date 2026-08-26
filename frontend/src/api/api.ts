@@ -1,5 +1,4 @@
-const API_BASE = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
-// const API_BASE = 'http://localhost:8080/api';
+import { API_BASE } from '../utils/constants';
 
 function getToken(): string | null {
   return localStorage.getItem('auth_token');

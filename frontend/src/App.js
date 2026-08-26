@@ -49,7 +49,7 @@ function App() {
 	// });
 
 	const [hiddenWords, setHiddenWords] = useState(() => {
-		return JSON.parse(localStorage.getItem('hiddenWords')) || [];
+		// return JSON.parse(localStorage.getItem('hiddenWords')) || [];
 	});
 	const [order, setOrder] = useState([]);
 	// const [currentIndex, setCurrentIndex] = useState(0);
@@ -87,12 +87,12 @@ function App() {
 	}, [hiddenWords]);
 
 	function handleCardsNav(operation) {
-		setOrder(prev => {
-			const visible = prev.filter(
+		setOrder(prevOrder => {
+			const visible = prevOrder.filter(
 				id => !hiddenWords.includes(id)
 			);
 
-			if (visible.length <= 1) return prev;
+			if (visible.length <= 1) return prevOrder;
 
 			let rotated;
 
@@ -104,12 +104,12 @@ function App() {
 					...visible.slice(0, -1),
 				];
 			} else {
-				return prev;
+				return prevOrder;
 			}
 
 			const queue = [...rotated];
 
-			return prev.map(id =>
+			return prevOrder.map(id =>
 				hiddenWords.includes(id)
 					? id
 					: queue.shift()
