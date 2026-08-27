@@ -11,6 +11,7 @@ import './App.css';
 
 import { fetchCategories } from './api/categoriesApi';
 import { fetchWordsByCategory } from './api/wordsApi';
+import { hideWord, unhideWord } from './api/hiddenWordsApi';
 
 function App() {
 	const navigate = useNavigate();
@@ -42,14 +43,7 @@ function App() {
 			});
 	}, []);
 
-	// const [hiddenWords, setHiddenWords] = useState(() => {
-	// 	const stored = localStorage.getItem('hiddenWords');
-	// 	return stored ? JSON.parse(stored) : [];
-	// });
-
-	const [hiddenWords, setHiddenWords] = useState(() => {
-		// return JSON.parse(localStorage.getItem('hiddenWords')) || [];
-	});
+	const [hiddenWords, setHiddenWords] = useState([]);
 	const [order, setOrder] = useState([]);
 	// const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -74,16 +68,9 @@ function App() {
 			.finally(() => setIsLoadingWords(false));
 	}, [activeCategory]);
 
-
-
-	// useEffect(() => {
-	// 	const ids = categories.find(h => h._id === activeCategory)?.items || [];
-	// 	setCardsOrder(ids);
-	// }, [activeCategory]);
-
 	useEffect(() => {
-		localStorage.setItem('hiddenWords', JSON.stringify(hiddenWords));
-	}, [hiddenWords]);
+		if (!isLogged) setHiddenWords([]);
+	}, [isLogged]);
 
 	function handleCardsNav(operation) {
 		setOrder(prevOrder => {
@@ -127,13 +114,19 @@ function App() {
 	}
 
 	function handleCardHide(cardId) {
+		if (isLogged) {
+			hideWord(cardId).catch(console.error);
+		}
 		setHiddenWords(prev => {
 			if (prev.includes(cardId)) return prev;
 			return [...prev, cardId];
 		});
 	}
-	
+
 	const handleRestoreWord = (id) => {
+		if (isLogged) {
+			unhideWord(id).catch(console.error);
+		}
 		setHiddenWords(prev =>
 			prev.filter(hiddenId => hiddenId !== id)
 		);
@@ -187,7 +180,6 @@ function App() {
 						path="/3000-words/hidden"
 						element={
 							<HiddenWordsPage
-								hiddenWords={hiddenWords}
 								onRestore={handleRestoreWord}
 							/>
 						}

@@ -49,7 +49,7 @@ Web application for learning the most common English words using flashcards, spa
 ### Frontend Pages (Routes)
 - `frontend/src/pages/CardsPage.jsx` — Main flashcards page
 - `frontend/src/pages/AuthPage.tsx` — Authentication page
-- `frontend/src/pages/HiddenWordsPage.jsx` — Hidden words management
+- `frontend/src/pages/HiddenWordsPage.jsx` — Hidden words management (loads via `hiddenWordsApi.fetchHiddenWords` → `GET /hidden-words`, no localStorage)
 
 ### Frontend Components
 - `frontend/src/components/Loader.tsx` — Loading spinner component (rotating circle with arrow)
@@ -61,8 +61,9 @@ Web application for learning the most common English words using flashcards, spa
 All API modules go through the shared HTTP client `frontend/src/api/api.ts` (base URL from `API_BASE` in `utils/constants`, Bearer token, JSON headers, error handling). Do not call raw `fetch` with hardcoded URLs.
 - `frontend/src/api/api.ts` — Base API client / config
 - `frontend/src/api/authApi.ts` — Authentication API calls
-- `frontend/src/api/wordsApi.ts` — Words-related API calls
-- `frontend/src/api/categoriesApi.ts` — Categories-related API calls
+- `frontend/src/api/wordsApi.ts` — Words-related API calls (`GET /categories/:id/words`)
+- `frontend/src/api/categoriesApi.ts` — Categories-related API calls (`GET /categories`)
+- `frontend/src/api/hiddenWordsApi.ts` — Hidden words API (`GET /hidden-words`, `POST /words/:id/hide`, `DELETE /words/:id/hide`)
 
 ### Frontend Types & Utils
 - `frontend/src/types/` — TypeScript type definitions
@@ -109,7 +110,7 @@ All API modules go through the shared HTTP client `frontend/src/api/api.ts` (bas
 ### Frontend
 - Mixed `.js`, `.jsx`, `.ts`, `.tsx` files — check extension for type safety level
 - Components use PascalCase naming
-- API modules grouped by domain (auth, words, categories)
+- API modules grouped by domain (auth, words, categories, hiddenWords)
 - Styles in `styles/` directory and co-located `.css` files
 
 ### Backend

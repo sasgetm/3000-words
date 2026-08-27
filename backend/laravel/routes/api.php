@@ -37,6 +37,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    Route::get(
+        '/hidden-words',
+        [HideWordController::class, 'index']
+    );
+
     Route::post(
         '/words/{wordId}/hide',
         [HideWordController::class, 'hide']

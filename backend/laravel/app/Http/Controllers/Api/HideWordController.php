@@ -8,6 +8,15 @@ use Illuminate\Http\JsonResponse;
 
 class HideWordController extends Controller
 {
+    public function index(Request $request): JsonResponse
+    {
+        $words = $request->user()
+            ->hiddenWords()
+            ->get();
+
+        return response()->json($words);
+    }
+
     public function hide(Request $request, int $wordId): JsonResponse
     {
         $request->user()
