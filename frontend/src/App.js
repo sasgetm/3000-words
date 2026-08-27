@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { fetchCurrentUser } from './api/authApi';
 import './styles/normalize.css';
 import './App.css';
-// import { cardsArr } from './utils/constants.js';
 
 import { fetchCategories } from './api/categoriesApi';
 import { fetchWordsByCategory } from './api/wordsApi';
