@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 
 import CardsPage from './pages/CardsPage';
 import HiddenWordsPage from './pages/HiddenWordsPage';
@@ -69,8 +69,35 @@ function App() {
 	}, [activeCategory]);
 
 	useEffect(() => {
-		if (!isLogged) setHiddenWords([]);
-	}, [isLogged]);
+		if (!isLogged) {
+			setHiddenWords([]);
+			return;
+		}
+		(async () => {
+			const pendingRaw = sessionStorage.getItem('pendingHiddenWords');
+			if (pendingRaw) {
+				try {
+					const pendingIds = JSON.parse(pendingRaw);
+					if (Array.isArray(pendingIds) && pendingIds.length > 0) {
+						await Promise.all(pendingIds.map(id => hideWord(id).catch(() => {})));
+						setHiddenWords(prev => {
+							const merged = [...prev];
+							pendingIds.forEach(id => {
+								if (!merged.includes(id)) merged.push(id);
+							});
+							return merged;
+						});
+					}
+				} catch {}
+				sessionStorage.removeItem('pendingHiddenWords');
+			}
+			const pendingRedirect = sessionStorage.getItem('pendingRedirect');
+			if (pendingRedirect) {
+				sessionStorage.removeItem('pendingRedirect');
+				navigate(pendingRedirect);
+			}
+		})();
+	}, [isLogged, navigate]);
 
 	function handleCardsNav(operation) {
 		setOrder(prevOrder => {
@@ -116,11 +143,15 @@ function App() {
 	function handleCardHide(cardId) {
 		if (isLogged) {
 			hideWord(cardId).catch(console.error);
+			setHiddenWords(prev => (prev.includes(cardId) ? prev : [...prev, cardId]));
+			return;
 		}
-		setHiddenWords(prev => {
-			if (prev.includes(cardId)) return prev;
-			return [...prev, cardId];
-		});
+		const pending = JSON.parse(sessionStorage.getItem('pendingHiddenWords') || '[]');
+		if (!pending.includes(cardId)) {
+			pending.push(cardId);
+			sessionStorage.setItem('pendingHiddenWords', JSON.stringify(pending));
+		}
+		navigate('/3000-words/auth');
 	}
 
 	const handleRestoreWord = (id) => {
@@ -167,7 +198,14 @@ function App() {
 								onHide={handleCardHide}
 								onNav={handleCardsNav}
 								onCategory={handleCategory}
-								onOpenHidden={() => navigate('/3000-words/hidden')}
+								onOpenHidden={() => {
+									if (isLogged) {
+										navigate('/3000-words/hidden');
+									} else {
+										sessionStorage.setItem('pendingRedirect', '/3000-words/hidden');
+										navigate('/3000-words/auth');
+									}
+								}}
 								onOpenAuth={() => navigate('/3000-words/auth')}
 								categories={categories}
 								activeCategory={activeCategory}
@@ -179,9 +217,14 @@ function App() {
 					<Route
 						path="/3000-words/hidden"
 						element={
-							<HiddenWordsPage
-								onRestore={handleRestoreWord}
-							/>
+							isLogged ? (
+								<HiddenWordsPage onRestore={handleRestoreWord} />
+							) : (
+								(() => {
+									sessionStorage.setItem('pendingRedirect', '/3000-words/hidden');
+									return <Navigate to="/3000-words/auth" replace />;
+								})()
+							)
 						}
 					/>
 

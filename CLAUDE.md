@@ -43,13 +43,13 @@ Web application for learning the most common English words using flashcards, spa
 
 ### Frontend Entry Points
 - `frontend/src/index.js` — App entry point, ReactDOM render
-- `frontend/src/App.js` — Root component, routing setup
+- `frontend/src/App.js` — Root component, routing setup, auth guard & sessionStorage orchestration (`pendingHiddenWords`, `pendingRedirect`; processes pending hides/redirect after login)
 - `frontend/src/App.css` — Root component styles
 
 ### Frontend Pages (Routes)
-- `frontend/src/pages/CardsPage.jsx` — Main flashcards page
+- `frontend/src/pages/CardsPage.jsx` — Main flashcards page (hide via `App.handleCardHide`: if logged → `hiddenWordsApi.hideWord`, else → `sessionStorage.pendingHiddenWords` + redirect to `/auth`)
 - `frontend/src/pages/AuthPage.tsx` — Authentication page
-- `frontend/src/pages/HiddenWordsPage.jsx` — Hidden words management (loads via `hiddenWordsApi.fetchHiddenWords` → `GET /hidden-words`, no localStorage)
+- `frontend/src/pages/HiddenWordsPage.jsx` — Hidden words management (loads via `hiddenWordsApi.fetchHiddenWords` → `GET /hidden-words`; restore via `hiddenWordsApi.unhideWord`; guarded — unauthenticated access saves `sessionStorage.pendingRedirect` and redirects to `/auth`)
 
 ### Frontend Components
 - `frontend/src/components/Loader.tsx` — Loading spinner component (rotating circle with arrow)
