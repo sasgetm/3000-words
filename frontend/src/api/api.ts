@@ -1,5 +1,4 @@
-const API_BASE = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
-// const API_BASE = 'http://localhost:8080/api';
+import { API_BASE } from '../utils/constants';
 
 function getToken(): string | null {
   return localStorage.getItem('auth_token');
@@ -49,6 +48,9 @@ export const api = {
       body: JSON.stringify(body),
     }),
 
-  delete: <T>(url: string) =>
-    request<T>(url, { method: 'DELETE' }),
+  delete: <T>(url: string, body?: unknown) =>
+    request<T>(url, {
+      method: 'DELETE',
+      body: JSON.stringify(body),
+    }),
 };

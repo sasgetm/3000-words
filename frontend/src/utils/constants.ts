@@ -507,8 +507,8 @@ export const cardsHundreds = [
   }
 ];
 
-// export const token = '4d2fc48f-d0c7-4bea-a8e0-385b9ccc8f15';
-// export const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-75';
+// export const API_BASE = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
+export const API_BASE = 'http://localhost:8080/api';
 
 // export const profileElementsSelectors = {
 //   userNameElementSelector: '.profile__name',

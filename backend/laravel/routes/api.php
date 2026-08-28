@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\WordController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\HideWordController;
 
 Route::get('/test', function () {
     return [
@@ -35,4 +36,19 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get(
+        '/hidden-words',
+        [HideWordController::class, 'index']
+    );
+
+    Route::post(
+        '/words/{wordId}/hide',
+        [HideWordController::class, 'hide']
+    );
+
+    Route::delete(
+        '/words/{wordId}/hide',
+        [HideWordController::class, 'unhide']
+    );
 });
