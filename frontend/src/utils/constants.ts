@@ -507,8 +507,8 @@ export const cardsHundreds = [
   }
 ];
 
-// export const API_BASE = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
-export const API_BASE = 'http://localhost:8080/api';
+export const API_BASE = 'http://alexandergetmanets.ru/3000-words/backend/public/api';
+// export const API_BASE = 'http://localhost:8080/api';
 
 // export const profileElementsSelectors = {
 //   userNameElementSelector: '.profile__name',
